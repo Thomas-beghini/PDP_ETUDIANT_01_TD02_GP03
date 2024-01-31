@@ -16,10 +16,6 @@ void setup() {
    sensor_t sensor;
   // put your setup code here, to run once:
   pinMode(LED, OUTPUT);
-}
-
-void loop() {
-  delay(5000);
   // Get temperature event and print its value.
   sensors_event_t event;
   dht.temperature().getEvent(&event);
@@ -41,4 +37,12 @@ void loop() {
     Serial.print(event.relative_humidity);
     Serial.println(F("%"));
   }
+    esp_sleep_enable_timer_wakeup(5 * 1000000); // 5 seconds in microseconds
+  Serial.println(F("Entering Deep Sleep mode for 5 seconds..."));
+  delay(100); // Ensure Serial output is completed
+  esp_deep_sleep_start();
+}
+
+void loop() {
+  
 }
